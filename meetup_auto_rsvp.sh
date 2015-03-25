@@ -8,9 +8,10 @@ events=($res)
 store=~/.meetuprsvp
 touch $store
 rsvped=$(cat $store)
+echo $rsvped
 for ev in "${events[@]}"
 do
-	if [[ "$ev" != "*$rsvped*" ]]
+	if [[ ! "$rsvped" =~ "$ev" ]]
 	then
 		echo "rsvping yes to event $ev"
 		res=$(curl -s "https://api.meetup.com/2/rsvp/" -F "event_id=$ev" -F 'rsvp=yes' -F "key=$api_key" > /dev/null)
